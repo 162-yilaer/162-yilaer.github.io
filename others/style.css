@@ -1,0 +1,222 @@
+/* Footer layout (padding, background, max-width) handled by redesign.css */
+
+.footer-column {
+    float: left;
+    width: 33.33%;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.footer-left {
+    border-right: 1px solid #ddd;
+}
+
+.footer-center {
+    border-right: 1px solid #ddd;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-logo-img {
+    max-height: 40px;
+    width: auto;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* 微信小程序链接 */
+.wechat-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.wechat-link:hover {
+    opacity: 0.7;
+}
+
+.wechat-icon {
+    width: 32px;
+    height: 32px;
+    color: #3D281C;
+}
+
+.wechat-link span {
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.footer-brand p {
+    font-size: 14px;
+    color: #999;
+    margin: 0;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav-group {
+    text-align: left;
+}
+
+.nav-group h3 {
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.nav-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-group li {
+    margin-bottom: 8px;
+}
+
+.nav-group li a {
+    text-decoration: none;
+    color: #666;
+    font-size: 11px;
+}
+
+.nav-group li a:hover {
+    color: #333;
+}
+
+.footer-contact h3 {
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.footer-contact p {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.contact-info p {
+    margin: 5px 0;
+    color: #666;
+}
+
+/* 页脚 contact-info 白色背景尺寸覆盖（不影响联系页面） */
+.footer-contact .contact-info {
+    padding: 10px 14px;
+    margin: 12px 0;
+}
+
+.contact-links {
+    margin-bottom: 15px;
+}
+
+.contact-links a {
+    text-decoration: none;
+    color: #666;
+    font-size: 11px;
+    margin-right: 15px;
+}
+
+.contact-links a:hover {
+    color: #333;
+}
+
+.footer-search {
+    max-width: 250px;
+}
+
+.footer-search form {
+    display: flex;
+    flex-direction: row;
+}
+
+.footer-search .srk {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+}
+
+.footer-search .tj {
+    padding: 8px 15px;
+    border: 1px solid #5A4029;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    background: #3D281C;
+    cursor: pointer;
+    color: #F5F0E8;
+}
+
+.footer-search .tj:hover {
+    background: #5A4029;
+}
+
+.footer-divider {
+    clear: both;
+    border-bottom: 1px solid #ddd;
+    margin: 30px 0;
+}
+
+.bqxx {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 11px;
+    color: #999;
+    line-height: 1.8;
+}
+
+.bqxx a {
+    text-decoration: none;
+    color: #666;
+}
+
+.bqxx a:hover {
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .footer-column {
+        float: none;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+    .footer-center {
+        border-right: none;
+    }
+
+    .footer-nav {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .nav-group {
+        flex: 1;
+        min-width: 100px;
+    }
+
+    .footer-divider {
+        display: none;
+    }
+}
