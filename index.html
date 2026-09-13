@@ -272,31 +272,56 @@ item.classList.add('active');
 });
 </script>
 <script>
-// 首页视频：始终静音内联自动播放并循环播放，不随可视范围暂停（桌面/移动一致）
+// 首页视频播放策略（桌面 / 移动通用，并对 iOS 单视频限制做兼容）
+// 规则：视口内的视频一律尝试播放；离开视口的才暂停。
+// 桌面 / Android 下两个视频可同时保持播放；iOS Safari 因平台限制同一时刻只能播一个，
+// 但本策略不主动暂停"在视口内"的视频，避免与系统限制打架而产生随机卡顿。
 (function() {
-var videos = document.querySelectorAll('.home-auto-video');
-if (!videos.length) return;
-// 静音 + 内联 安全网（移动端自动播放前提：必须 muted 且 playsInline）
-videos.forEach(function(v) { v.muted = true; v.volume = 0; try { v.playsInline = true; } catch (e) {} });
-// 播放（已播放则忽略，被中断的 promise 静默吞掉）
-function playAll() {
+  var videos = [].slice.call(document.querySelectorAll('.home-auto-video'));
+  if (!videos.length) return;
+  // 静音 + 内联 安全网（移动端自动播放前提：必须 muted 且 playsInline）
+  videos.forEach(function(v) { v.muted = true; v.volume = 0; try { v.playsInline = true; } catch (e) {} });
+
+  // 视频在视口内的可见比例 (0~1)
+  function visRatio(v) {
+    var r = v.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var vw = window.innerWidth || document.documentElement.clientWidth;
+    var ih = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0));
+    var iw = Math.max(0, Math.min(r.right, vw) - Math.max(r.left, 0));
+    var total = r.width * r.height;
+    return total > 0 ? (ih * iw) / total : 0;
+  }
+  function play(v) { var p = v.play(); if (p && typeof p.then === 'function') { p.catch(function(){}); } }
+
+  // 核心策略：在视口内的播放，离开视口的暂停（绝不主动暂停"在视口内"的视频）
+  function update() {
+    videos.forEach(function(v) {
+      if (visRatio(v) > 0) { play(v); }
+      else if (!v.paused) { v.pause(); }
+    });
+  }
+
+  // 视频可播放时重试（规避 play() 在资源未就绪时被拒导致永不播放）
   videos.forEach(function(v) {
-    var p = v.play();
-    if (p && typeof p.then === 'function') { p.catch(function(){}); }
+    v.addEventListener('canplay', update);
+    v.addEventListener('loadeddata', update);
   });
-}
-// 可播放即开始（含从任意进度续播）
-videos.forEach(function(v) {
-  v.addEventListener('canplay', function() { var p = v.play(); if (p && typeof p.then === 'function') { p.catch(function(){}); } });
-});
-// 初次加载尝试播放
-playAll();
-// iOS 限制：首个用户手势后才能真正开始播放，确保所有视频（含同时可见的两个）都播起来
-function onGesture() { playAll(); }
-window.addEventListener('touchstart', onGesture, { passive: true, once: true });
-window.addEventListener('click', onGesture, { once: true });
-// 标签页切回时补播
-document.addEventListener('visibilitychange', function() { if (!document.hidden) playAll(); });
+
+  update();
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function() { update(); }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+    videos.forEach(function(v) { io.observe(v); });
+  }
+  probe();
+  // iOS 限制：首个用户手势后才允许开始播放
+  function onGesture() { update(); }
+  window.addEventListener('touchstart', onGesture, { passive: true, once: true });
+  window.addEventListener('click', onGesture, { once: true });
+  window.addEventListener('resize', update);
+  window.addEventListener('scroll', update, { passive: true });
+  document.addEventListener('visibilitychange', function() { if (!document.hidden) update(); });
 })();
 </script>
 
