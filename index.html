@@ -276,11 +276,14 @@ item.classList.add('active');
 (function() {
 var videos = document.querySelectorAll('.home-auto-video');
 if (!videos.length) return;
-// 静音安全网（移动端自动播放前提：必须 muted）
-videos.forEach(function(v) { v.muted = true; v.volume = 0; });
+// 静音 + 内联 安全网（移动端自动播放前提：必须 muted 且 playsInline）
+videos.forEach(function(v) { v.muted = true; v.volume = 0; try { v.playsInline = true; } catch (e) {} });
 function tryPlay(v) {
-  var p = v.play();
-  if (p && typeof p.then === 'function') { p.catch(function(){}); }
+  // 仅在暂停且可见时播放，确保从暂停处继续（不从头开始）
+  if (v.paused && inView(v)) {
+    var p = v.play();
+    if (p && typeof p.then === 'function') { p.catch(function(){}); }
+  }
 }
 function inView(v) {
   var r = v.getBoundingClientRect();
@@ -297,17 +300,23 @@ var io = new IntersectionObserver(function(entries) {
     if (entry.isIntersecting) {
       tryPlay(v);
     } else {
-      // 离开视口：暂停并回到开头
-      v.pause();
-      try { v.currentTime = 0; } catch (e) {}
+      // 离开视口：仅暂停并保留进度（回到可视范围时从暂停处继续，不从头）
+      if (!v.paused) { v.pause(); }
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0 });
 videos.forEach(function(v) {
   io.observe(v);
   // 移动端兜底：视频可播放且已在视口内时再尝试一次自动播放
-  v.addEventListener('canplay', function() { if (inView(v)) tryPlay(v); });
+  v.addEventListener('canplay', function() { tryPlay(v); });
 });
+// iOS 兜底：首个用户手势时，把当前在可视范围内的视频都播起来
+// （解决手机端两个视频同时可见时，仅第一个自动播放、另一个被暂停的问题）
+function kickAll() {
+  videos.forEach(function(v) { if (inView(v)) tryPlay(v); });
+}
+window.addEventListener('touchstart', kickAll, { passive: true, once: true });
+window.addEventListener('click', kickAll, { once: true });
 })();
 </script>
 
