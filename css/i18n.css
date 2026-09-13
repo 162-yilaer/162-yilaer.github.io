@@ -15,17 +15,17 @@ body.lang-en .dl-menu .sanji-menu {width:220px;}
 body.lang-en .dl-menu .sanji-menu p a {font-size:10px;
 letter-spacing:0.02em;}
 body.lang-en .lang-switch {margin-left:10px;}
-body.lang-en .mobile-nav-l1 li {font-size:12px;
+body.lang-en .mobile-nav-l1 li {font-size:6px;
 padding:12px 18px;}
-body.lang-en .mobile-nav-l2 li {font-size:11px;
+body.lang-en .mobile-nav-l2 li {font-size:5.5px;
 padding:10px 14px;}
-body.lang-en .mobile-nav-l2 .has-sub-header {font-size:11px;
+body.lang-en .mobile-nav-l2 .has-sub-header {font-size:5.5px;
 padding:10px 14px;}
-body.lang-en .mobile-sub-list li {font-size:10px;
+body.lang-en .mobile-sub-list li {font-size:5px;
 padding:6px 20px;}
-body.lang-en .mobile-nav-l1 {width:180px;}
-body.lang-en .mobile-nav-l2 {width:150px;}
-body.lang-en .mobile-nav-l2.open {transform:translateX(-180px);}
+body.lang-en .mobile-nav-l1 {width:30vw;}
+body.lang-en .mobile-nav-l2 {width:20vw;}
+body.lang-en .mobile-nav-l2.open {transform:translateX(-30vw);}
 body.lang-en .footer-nav h3 {font-size:13px;
 letter-spacing:0.05em;}
 body.lang-en .footer-nav ul li a {font-size:12px;
@@ -239,4 +239,22 @@ margin-bottom:4px;}
 body.lang-en .product-info-grid .info-item p {font-size:8px;
 line-height:1.4;}
 body.lang-en .stkjjxx {font-size:12px;
-line-height:1.6;}}
+line-height:1.6;}
+body.lang-en .footer-contact h3 {font-size:14px;
+margin-bottom:12px;}
+body.lang-en .footer-contact p {font-size:10px;}
+body.lang-en .contact-info p {font-size:10px;}
+body.lang-en .footer-search .srk {font-size:10px;}
+body.lang-en .footer-search .tj {font-size:10px;}
+body.lang-en .footer-nav h3 {font-size:8px;
+letter-spacing:0.04em;}
+body.lang-en .footer-nav ul li a {font-size:8px;}
+body.lang-en .bqxx {font-size:9px;
+line-height:1.9;}
+body.lang-en .bqxx a {font-size:9px;}
+body.lang-en .faq-english {font-size:11px;}
+body.lang-en .faq-title {font-size:22px;}
+body.lang-en .faq-subtitle {font-size:11px;}
+body.lang-en .faq-question {font-size:13px;}
+body.lang-en .faq-question span:first-child {font-size:13px;}
+body.lang-en .faq-answer p {font-size:12px;}}

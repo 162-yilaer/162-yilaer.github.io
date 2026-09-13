@@ -1,3 +1,30 @@
 .DS_Store
 Thumbs.db
 *.log
+
+# Build output (deploy source is repo root, not site_output/)
+site_output/
+
+# Source / dev tooling (not part of the deployed static site)
+PortableGit/
+templates/
+__pycache__/
+*.py
+requirements.txt
+
+# Raw material source folder (large, not served)
+门内网站素材/
+
+# Local dev docs / stray snapshots (not part of deployed static site)
+手机端文本字号对照表.html
+门内网站素材.html
+
+# IDE / agent config
+.idea/
+.trae/
+.workbuddy/
+
+# Local preview & temp artifacts
+_preview/
+_*.py
+_*.png
