@@ -3030,3 +3030,11 @@ flex-direction:column;
 gap:0}
 .ttl-line{display:block;
 white-space:nowrap}
+
+/* 首页视频：移动端与桌面端一致 —— 自动播放、无原生播放器、禁用手动点击 */
+.home-auto-video{pointer-events:none;-webkit-tap-highlight-color:transparent;outline:none}
+.home-auto-video::-webkit-media-controls,
+.home-auto-video::-webkit-media-controls-panel,
+.home-auto-video::-webkit-media-controls-play-button,
+.home-auto-video::-webkit-media-controls-start-playback-button,
+.home-auto-video::-webkit-media-controls-overlay-play-button{display:none!important;-webkit-appearance:none}
